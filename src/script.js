@@ -6,8 +6,13 @@ const lista = (() => {
     lista.unshift(item);
   };
   const remove = (itemId) => {
-    lista.splice(lista.indexOf(findItem(itemId)), 1);
+    return lista.splice(lista.indexOf(findItem(itemId)), 1)[0];
   };
+  const moveToEnd = (itemId) => {
+    const item = remove(itemId);
+    lista.push(item);
+  };
+
   const getLista = () => lista;
 
   //getlista by id
@@ -30,14 +35,16 @@ const lista = (() => {
     toHtml,
     getLista,
     findItem,
+    moveToEnd,
   };
 })();
 
-// factory de item com nome e quantidade
+// factory de item
 const itemFactory = (name, quantity) => {
   let done = false;
   let id = 0;
-  if (!lista.length === 0) id = lista.findItem(lista.length - 1).getId() + 1;
+  if (!(lista.getLista().length === 0))
+    id = lista.findItem(lista.getLista().length - 1).getId() + 1;
 
   const toHtml = () => {
     const html = document.createElement("div");
@@ -48,6 +55,7 @@ const itemFactory = (name, quantity) => {
     html.addEventListener("click", () => {
       if (!getDone()) {
         html.classList.add("done");
+        lista.moveToEnd(getId());
       } else {
         html.classList.remove("done");
       }
@@ -77,7 +85,6 @@ const itemFactory = (name, quantity) => {
 
 const main = document.querySelector("main");
 const container = document.querySelector(".container");
-//botão de adicionar item
 const addItem = document.querySelector(".addItem");
 const formItem = document.querySelector(".formItem");
 
