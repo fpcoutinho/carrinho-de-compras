@@ -24,9 +24,11 @@ const lista = (() => {
     //return join de todos os itens em html
     const html = document.createElement("div");
     html.classList.add("lista-container");
+
     lista.map((item) => {
       html.appendChild(item.toHtml());
     });
+
     return html;
   };
   return {
@@ -45,6 +47,8 @@ const itemFactory = (name, quantity) => {
   let id = 0;
   if (!(lista.getLista().length === 0))
     id = lista.findItem(lista.getLista().length - 1).getId() + 1;
+
+  if (quantity < 1) quantity = 1;
 
   const toHtml = () => {
     const html = document.createElement("div");
